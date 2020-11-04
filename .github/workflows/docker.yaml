@@ -12,7 +12,6 @@ jobs:
         uses: actions/checkout@v2
         with:
           repository: 'micro/micro'
-          path: 'micro'
 
       - name: Fetch tags
         run: git fetch --prune --unshallow
@@ -40,5 +39,4 @@ jobs:
           password: ${{ secrets.GHCR_PAT }}
           snapshot: true
           registry: ghcr.io
-          workdir: micro
-          dockerfile: micro/Dockerfile
+    
