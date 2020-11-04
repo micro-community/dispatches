@@ -12,6 +12,7 @@ jobs:
         uses: actions/checkout@v2
         with:
           repository: 'micro/micro'
+          ref: ghcr
 
       - name: Fetch tags
         run: git fetch --prune --unshallow
@@ -31,7 +32,7 @@ jobs:
         run: |
           go run . init --profile=platform --output=profile.go
 
-      - name: Publish to Registry
+      - name: Publish to platform image to registry
         uses: elgohr/Publish-Docker-Github-Action@master
         with:
           name: m3o/platform
@@ -39,4 +40,10 @@ jobs:
           password: ${{ secrets.GHCR_PAT }}
           snapshot: true
           registry: ghcr.io
-    
+
+      - name: Build and push cells to registry
+        run: cd service/runtime/cells; bash build.sh
+        env:
+          USERNAME: ${{ secrets.GHCR_ACTOR }}git
+          PASSWORD: ${{ secrets.GHCR_PAT }}
+          DOCKER_DOMAIN: ghcr.io
