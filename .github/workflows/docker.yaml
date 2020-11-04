@@ -44,6 +44,7 @@ jobs:
       - name: Build and push cells to registry
         run: cd service/runtime/cells; bash build.sh
         env:
-          USERNAME: ${{ secrets.GHCR_ACTOR }}git
+          USERNAME: ${{ secrets.GHCR_ACTOR }}
           PASSWORD: ${{ secrets.GHCR_PAT }}
           DOCKER_DOMAIN: ghcr.io
+          IMAGE: m3o/cells
