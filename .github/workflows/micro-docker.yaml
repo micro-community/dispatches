@@ -1,8 +1,5 @@
 name: Docker Images
 on:
-  push:
-    branches:
-      - fix
   # This workflow should be triggered by pushes to micro/micro main branch
   # It builds the docker images as required by m3o
   repository_dispatch:
