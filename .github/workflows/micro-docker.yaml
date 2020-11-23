@@ -8,11 +8,10 @@ jobs:
   build:
     runs-on: ubuntu-latest
     steps:
-
       - name: Clone micro repo
         uses: actions/checkout@v2
         with:
-          repository: 'micro/micro'
+          repository: "micro/micro"
 
       - name: Fetch tags
         run: git fetch --prune --unshallow
@@ -25,12 +24,12 @@ jobs:
           go mod edit -replace github.com/micro/micro/plugin/prometheus/v3=./plugin/prometheus
           go mod edit -replace github.com/micro/micro/plugin/nats/broker/v3=./plugin/nats/broker
           go mod edit -replace github.com/micro/micro/plugin/nats/stream/v3=./plugin/nats/stream
-          go mod edit -replace github.com/micro/micro/profile/platform/v3=./profile/platform
           go mod edit -replace google.golang.org/grpc=google.golang.org/grpc@v1.26.0
 
       - name: Build profile
         run: |
-          go run . init --profile=platform --output=profile.go
+          go run . init --package=github.com/m3o/platform/profile/platform --output=profile.go
+          GOPROXY=direct go get
 
       - name: Publish to platform image to registry
         uses: elgohr/Publish-Docker-Github-Action@master
