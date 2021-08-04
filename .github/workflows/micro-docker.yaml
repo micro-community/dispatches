@@ -30,6 +30,12 @@ jobs:
           password: ${{ secrets.GHCR_PAT }}
           snapshot: true
           registry: ghcr.io
+          
+      - name: Set up QEMU
+        uses: docker/setup-qemu-action@v1
+
+      - name: Set up Docker Buildx
+        uses: docker/setup-buildx-action@v1
 
       - name: Build and push cells to registry
         run: cd service/runtime/cells; bash build.sh
