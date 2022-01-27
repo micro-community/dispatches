@@ -25,7 +25,7 @@ jobs:
       - name: Build profile
         run: |
           go mod edit -replace google.golang.org/grpc=google.golang.org/grpc@v1.26.0
-          go run . init --package=github.com/m3o/platform/profile/platform --output=profile.go
+          GOFLAGS=-mod=mod go run . init --package=github.com/m3o/platform/profile/platform --output=profile.go
           GOPROXY=direct go get
 
       - name: Publish to platform image to registry
