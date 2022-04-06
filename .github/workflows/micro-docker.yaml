@@ -17,7 +17,7 @@ jobs:
       - name: Clone micro repo
         uses: actions/checkout@v2
         with:
-          repository: "micro-community/micro"
+          repository: "crazybber/micro"
 
       - name: Fetch tags
         run: git fetch --prune --unshallow
