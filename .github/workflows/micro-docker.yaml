@@ -8,16 +8,16 @@ jobs:
   build:
     runs-on: ubuntu-latest
     steps:
-      - name: Set up Go 1.17
+      - name: Set up Go 1.18
         uses: actions/setup-go@v1
         with:
-          go-version: 1.17
+          go-version: 1.18
         id: go
 
       - name: Clone micro repo
         uses: actions/checkout@v2
         with:
-          repository: "micro/micro"
+          repository: "micro-community/micro"
 
       - name: Fetch tags
         run: git fetch --prune --unshallow
@@ -25,17 +25,17 @@ jobs:
       - name: Build profile
         run: |
           go mod edit -replace google.golang.org/grpc=google.golang.org/grpc@v1.26.0
-          GOFLAGS=-mod=mod go run . init --package=github.com/m3o/platform/profile/platform --output=profile.go
+          GOFLAGS=-mod=mod go run . init --package=github.com/micro-community/platform/profile/platform --output=profile.go
           GOPROXY=direct go get
 
       - name: Publish to platform image to registry
         uses: elgohr/Publish-Docker-Github-Action@master
         with:
-          name: m3o/platform
+          name: crazybber/platform
           username: ${{ secrets.GHCR_ACTOR }}
           password: ${{ secrets.GHCR_PAT }}
           snapshot: true
-          registry: ghcr.io
+          registry: docker.io
           
       - name: Set up QEMU
         uses: docker/setup-qemu-action@v1
@@ -48,5 +48,5 @@ jobs:
         env:
           USERNAME: ${{ secrets.GHCR_ACTOR }}
           PASSWORD: ${{ secrets.GHCR_PAT }}
-          DOCKER_DOMAIN: ghcr.io
-          IMAGE: m3o/cells
+          DOCKER_DOMAIN: docekr.io
+          IMAGE: crazybber/cells
